@@ -1,25 +1,39 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState } from "react";
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+	// state (état,données)
+	const [fruits, setFruits] = useState([
+		{ id: 1, nom: "Abricot" },
+		{ id: 2, nom: "Banane" },
+		{ id: 3, nom: "Cerise" }
+	]);
+
+
+	// comportements
+	const HandleDelete = (id) => {
+		console.log(id);
+
+		// copie du state
+		const fruitsCopy = [...fruits];
+		// const fruitsCopy = fruits.slice();
+
+		// manipuler la copie du state
+		const fruitsCopyUpdated =  fruitsCopy.filter(fruit => fruit.id !== id)
+
+		// modifier le state avec setter
+		setFruits(fruitsCopyUpdated);
+	}
+
+	// affichage (render)
+	return <div>
+		<h1>Liste de fruits</h1>
+		<ul>
+			{fruits.map((fruit) => (
+				<li key={fruit.id}>
+					{fruit.nom} <button onClick={() => HandleDelete(fruit.id)}>X</button>
+				</li>
+		))}</ul>
+	</div>
 }
 
 export default App;
