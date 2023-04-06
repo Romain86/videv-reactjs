@@ -1,4 +1,6 @@
 import { useState } from "react";
+import Fruit from "./components/Fruit";
+import FruitForm from "./components/FruitForm";
 
 function App() {
 	// state (état,données)
@@ -8,14 +10,12 @@ function App() {
 		{ id: 3, nom: "Cerise" }
 	]);
 
-	const [nouveauFruit, setNouveauFruit] = useState("");
-
 	// const inputRef = useRef();
 
 
 	// comportements
 	const HandleDelete = (id) => {
-		console.log(id);
+		// console.log(id);
 
 		// copie du state
 		const fruitsCopy = [...fruits];
@@ -28,28 +28,15 @@ function App() {
 		setFruits(fruitsCopyUpdated);
 	}
 
-	const handleSubmit = (event) => {
-		event.preventDefault();
-		// alert("handleSubmit");
-		// console.log(inputRef.current.value);
-		
+	const handleAdd = (fruitAAjouter) => {
 		// copie du state
 		const fruitsCopy = [...fruits];
-		
+
 		// manipulation sur la copie du state
-		const id = new Date().getTime();
-		const nom = nouveauFruit;
-		fruitsCopy.push({ id, nom});
-		// console.log(fruitsCopy);
+		fruitsCopy.push(fruitAAjouter);
 
 		// modifier le state avec setter
 		setFruits(fruitsCopy);
-		setNouveauFruit("");
-	}
-
-	const heandleChange = (event) => {
-		// console.log(valueAfterChange);
-		setNouveauFruit(event.target.value);
 
 	}
 
@@ -58,20 +45,9 @@ function App() {
 		<h1>Liste de fruits</h1>
 		<ul>
 			{fruits.map((fruit) => (
-				<li key={fruit.id}>
-					{fruit.nom} <button onClick={() => HandleDelete(fruit.id)}>X</button>
-				</li>
+				<Fruit fruitInfo={fruit} onFruitDelete={HandleDelete}  key={fruit.id}/>
 			))}</ul>
-		<form action="submit" onSubmit={handleSubmit}>
-			<input 
-				value={nouveauFruit} 
-				// ref={inputRef}
-				type="text" 
-				placeholder="Ajouter un fruit..." 
-				onChange={heandleChange}
-				/>
-			<button>Ajouter +</button>
-		</form>
+		<FruitForm handleAdd={handleAdd}/>
 	</div>
 }
 
