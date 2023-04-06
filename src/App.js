@@ -40,12 +40,18 @@ function App() {
 
 	}
 
+	const afficherFruitPrefere = (fruitNom) => {
+		alert(`J'aime trop ce fruit: ${fruitNom}`)
+	}
+
 	// affichage (render)
 	return <div>
 		<h1>Liste de fruits</h1>
 		<ul>
 			{fruits.map((fruit) => (
-				<Fruit fruitInfo={fruit} onFruitDelete={HandleDelete}  key={fruit.id}/>
+				<Fruit fruitInfo={fruit} 
+				onClick={() => afficherFruitPrefere(fruit.nom)} 
+				key={fruit.id}/>
 			))}</ul>
 		<FruitForm handleAdd={handleAdd}/>
 	</div>
